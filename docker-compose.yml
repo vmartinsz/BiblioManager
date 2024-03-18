@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  biblio_postgres:
+    image: postgres:latest
+    container_name: biblio_postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 17465849
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  biblio_pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_biblio
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@localhost.com
+      PGADMIN_DEFAULT_PASSWORD: 17465849
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  biblio_flask:
+    build: .
+    volumes:
+      - ./app/:/user/src/app/
+    ports:
+      - 5000:5000
+    environment:
+      PORT: 5000
+      FLASK_DEBUG: 1
+
+
+volumes:
+  pgadmin-data:
+
+networks:
+  default:
+    name: my-network
