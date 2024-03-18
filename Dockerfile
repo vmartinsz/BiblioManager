@@ -11,4 +11,4 @@ EXPOSE 5000
 COPY config/requirements.txt ./
 RUN pip install -r requirements.txt
 
-CMD ["python", "app.py"]
+CMD ["python", "main.py"]
